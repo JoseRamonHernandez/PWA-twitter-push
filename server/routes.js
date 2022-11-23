@@ -1,7 +1,7 @@
 // Routes.js - Módulo de rutas
 var express = require('express');
 var router = express.Router();
-
+const push = require('./push');
 
 const mensajes = [
 
@@ -51,7 +51,9 @@ router.post('/suscribe', (req, res) => {
 // Almacenar la suscripción 
 router.get('/key', (req, res) => {
 
-  res.json('public key');
+  const key = push.getKey();
+
+  res.json(key);
 
 });
 
