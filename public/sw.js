@@ -149,11 +149,51 @@ self.addEventListener('push', e => {
         badge: 'img/favicon.ico',
         image: 'https://es.web.img3.acsta.net/r_654_368/newsv7/17/07/30/13/53/005215.jpg',
         vibrate: [80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,320,160,320,160,320],
-        openUrl: '/'
+        openUrl: '/',
+        data: {
+            url: 'https://google.com',
+            id: data.user
+        },
+        actions: [
+            {
+                action: 'thor-action',
+                title: 'Thor',
+                icon: 'img/avatar/thor.jpg'
+            },
+            {
+                action: 'ironman-action',
+                title: 'Ironman',
+                icon: 'img/avatar/ironman.jpg'
+            }
+        ]
 
     };
 
 
     e.waitUntil( self.registration.showNotification( title, options ) );
+
+});
+
+
+// Cierra la notificacion
+self.addEventListener('notificationclose', e => {
+    console.log('Notificación cerrada', e);
+});
+
+
+
+self.addEventListener('notificationonclick', e => {
+
+
+    const notificacion = e.notification;
+    const accion = e.action;
+
+
+    console.log({ notificacion, accion });
+    // console.log(notificacion);
+    // console.log(accion);
+
+    notificacion.close();
+
 
 });
