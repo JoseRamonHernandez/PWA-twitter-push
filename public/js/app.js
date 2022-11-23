@@ -257,7 +257,7 @@ function enviarNotification() {
 function notificarme() {
 
 if ( !window.Notificaton ) {
-console.log('Este navegador no soporta notificaciones')
+console.log('Este navegador no soporta notificaciones');
 return;
 }
 
