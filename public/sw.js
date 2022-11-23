@@ -151,7 +151,8 @@ self.addEventListener('push', e => {
         vibrate: [80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,320,160,320,160,320],
         openUrl: '/',
         data: {
-            url: 'https://google.com',
+            // url: 'https://google.com',
+            url: '/',
             id: data.user
         },
         actions: [
@@ -193,7 +194,25 @@ self.addEventListener('notificationonclick', e => {
     // console.log(notificacion);
     // console.log(accion);
 
-    notificacion.close();
+    const respuesta = clients.matchAll()
+    .then( clientes => {
+
+        let cliente = clientes.find( c => {
+            return c.visibilityState === 'visible';
+        });
+
+        if ( cliente !== undefined ) {
+            cliente.navigate( notificacion.data.url );
+            cliente.focus();
+        } else {
+            clients.openWindow( notificacion.data.url );
+        }
+
+        return notificacion.close();
+
+    });
+
+    e.waitUntil( respuesta );
 
 
 });
