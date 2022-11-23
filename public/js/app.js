@@ -299,7 +299,7 @@ function getPublicKey() {
     return fetch('api/key')
         .then(res => res.arrayBuffer())
         //retornar arreglo, pero como un Uint8array
-        .then( key => new Uint8Array(key))
+        .then( key => new Uint8Array(key));
 
 
 
@@ -326,10 +326,25 @@ btnDesactivadas.on( 'click', function() {
             body: JSON.stringify( suscripcion )           
         })
         .then( verificaSuscripcion )
-        .catch( console.log );
+        .catch( cancelarSuscripcion );
 
             
 
         });
     });
 })
+
+function cancelarSuscripcion() {
+
+    swReg.pushManager.getSubscription().then( subs => {
+        subs.unsubscribe().then( () => verificaSuscripcion(false) );
+
+    });
+
+}
+
+btnActivadas.on( 'click', function() {
+    cancelarSuscripcion();
+});
+
+
